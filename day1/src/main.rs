@@ -16,8 +16,19 @@ fn main() {
     for x in &data {
         let y = 2020 - x;
         if data.contains(&y) {
-            println!("{}", x * y);
-            return;
+            println!("part 1: {}", x * y);
+            break;
+        }
+    }
+
+    for x in &data {
+        for y in &data {
+            for z in &data {
+                if x + y + z == 2020 {
+                    println!("part 2: {}", x * y * z);
+                    return;
+                }
+            }
         }
     }
 }
