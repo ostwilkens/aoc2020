@@ -1,12 +1,23 @@
 use std::{
-    fs::{read_to_string, File},
-    io::{self, BufRead, BufReader, Error},
+    collections::HashSet,
+    fs::File,
+    io::{BufRead, BufReader},
 };
 
-fn main() -> Result<(), Error> {
-    for line in read_to_string("input.txt")?.split('\n') {
-        println!("{}", line);
-    }
+fn main() {
+    let file = File::open("day1/input.txt").unwrap();
 
-    Ok(())
+    let data: HashSet<u32> = BufReader::new(file)
+        .lines()
+        .filter_map(|l| l.ok())
+        .filter_map(|l| l.parse::<u32>().ok())
+        .collect();
+
+    for x in &data {
+        let y = 2020 - x;
+        if data.contains(&y) {
+            println!("{}", x * y);
+            return;
+        }
+    }
 }
