@@ -11,7 +11,7 @@ fn main() -> Result<(), std::io::Error> {
         .lines()
         .filter_map(|l| l.ok())
         .filter_map(|l| l.parse::<Password>().ok())
-        .filter(|pw| pw.valid())
+        .filter(|pw| pw.valid_part_two())
         .count();
 
     println!("{}", valid_password_count);

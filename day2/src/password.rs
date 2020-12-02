@@ -10,9 +10,22 @@ pub struct Password {
 }
 
 impl Password {
-    pub fn valid(&self) -> bool {
+    pub fn valid_part_one(&self) -> bool {
         let count = self.phrase.chars().filter(|&c| c == self.char).count() as u8;
         return count >= self.min && count <= self.max;
+    }
+
+    pub fn valid_part_two(&self) -> bool {
+        let chars = self.phrase.chars().collect::<Vec<char>>();
+        let a = chars.get(self.min as usize - 1);
+        let b = chars.get(self.max as usize - 1);
+
+        match (a, b) {
+            (Some(&a), None) if a == self.char => true,
+            (Some(&a), Some(&b)) if a == self.char && b != self.char => true,
+            (Some(&a), Some(&b)) if b == self.char && a != self.char => true,
+            _ => false,
+        }
     }
 }
 
