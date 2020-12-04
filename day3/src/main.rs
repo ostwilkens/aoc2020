@@ -4,21 +4,30 @@ use std::{
 };
 
 fn main() -> Result<(), std::io::Error> {
-    let state = BufReader::new(File::open("input.txt")?)
+    let lines = BufReader::new(File::open("input.txt")?)
         .lines()
         .filter_map(|l| l.ok())
-        .skip(1)
-        .fold((0, 0), |(mut x, mut trees), l| {
-            x += 3;
+        .collect::<Vec<String>>();
 
-            if l.as_bytes()[x % 31] == 35 {
-                trees += 1;
-            }
+    let mut total: u64 = 1;
+    for (step_x, step_y) in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)].iter() {
+        total *= lines
+            .iter()
+            .skip(*step_y)
+            .step_by(*step_y)
+            .fold((0, 0), |(mut x, mut trees), l| {
+                x += step_x;
 
-            (x, trees)
-        });
+                if l.as_bytes()[x % 31] == 35 {
+                    trees += 1;
+                }
 
-    println!("{:?}", state.1);
+                (x, trees)
+            })
+            .1
+    }
+
+    println!("{:?}", total);
 
     Ok(())
 }
