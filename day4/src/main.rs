@@ -76,7 +76,7 @@ fn main() {
                     for _ in 0..6 {
                         let hex = [
                             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
-                            'f',
+                            'e', 'f',
                         ];
                         if let Some(c) = hcl.next() {
                             if hex.contains(&c) {
